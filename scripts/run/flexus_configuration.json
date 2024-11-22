@@ -1,0 +1,29 @@
+{
+  "l1i_sets": 256,
+  "l1i_associativity": 4,
+
+  "l1d_sets": 256,
+  "l1d_associativity": 4,
+
+  "l2_sets": 65536,
+  "l2_associativity": 16,
+
+  "itlb_sets": 1,
+  "itlb_associativity": 64,
+
+  "dtlb_sets": 1,
+  "dtlb_associativity": 64,
+
+  "stlb_sets": 1024,
+  "stlb_associativity": 4,
+
+
+  "directory": {
+    "type": "Infinite",
+    "sets": 1,
+    "associativity": 65536
+  },
+
+  "btb_sets": 1024,
+  "btb_associativity": 4
+}
