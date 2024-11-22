@@ -2,6 +2,9 @@
 
 set -e
 
+export CC=clang
+export CXX=clang++
+
 SIM=${1:-keenkraken}
 BUILD_TYPE=${2:-release}
 CUSTOM_GCC=${3:-system}
@@ -17,8 +20,16 @@ fi
 
 case $SIM in
     *kraken)
-        conan build $FLEXUS_ROOT $profile --name=$SIM -of out -b missing
-        conan export-pkg $FLEXUS_ROOT $profile --name=$SIM -of out
+        # conan build $FLEXUS_ROOT $profile --name=$SIM -of out -b missing
+        # conan export-pkg $FLEXUS_ROOT $profile --name=$SIM -of out
+        if [-d $FLEXUS_ROOT/build]; then
+            rm -rf $FLEXUS_ROOT/build
+        fi
+        
+        mkdir -p $FLEXUS_ROOT/build
+        cd $FLEXUS_ROOT/build
+        cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DSIMULATOR=$SIM
+        make -j
         ;;
     [cC][Qq]|qemu)
         pushd $QEMU_ROOT
@@ -40,7 +51,9 @@ case $SIM in
                         --enable-capstone                   \
                         --enable-slirp                      \
                         --enable-savevm-external            \
-                        --enable-libqflex
+                        --enable-libqflex                   \
+                        --disable-curses                    \
+                        --extra-cflags="-Wno-error"
 
         fi
         popd

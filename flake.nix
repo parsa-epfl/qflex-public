@@ -11,7 +11,7 @@
   in 
   {
 
-    devShells.${system}.default = pkgs.stdenv.mkDerivation {
+    devShells.${system}.default = pkgs.llvmPackages_18.stdenv.mkDerivation {
       pname = "qemu-qflex";
       version = "8";
       src = ".";
